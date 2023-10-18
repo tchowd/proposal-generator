@@ -4,10 +4,6 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useChat } from 'ai/react';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
 
-// type FilterButtonsProps = {
-//   onClose: () => void;
-// };
-
 function ProposalPage() {
   const [team, setTeam] = useState('');
   const [abstract, setAbstract] = useState('');
@@ -134,6 +130,12 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setMilestones(prevMilestones => [...prevMilestones, { number: newNumber, date: '', description: '' }]);
     };
 
+  const removeMilestone = () => {
+      const newMilestones = [...milestones];
+      newMilestones.pop();
+      setMilestones(newMilestones);
+  };
+
     const mainPlaceholder = `
     PROPOSAL NAME: 
 
@@ -167,45 +169,14 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 
   return (
     <>
-      <div className='ml-[16px] mr-[16px] relative'>
-        <div className="flex mt-[16px]  gap-8 justify-between items-center">
-          <div className="flex ">
-            <div className='mb-2'>
-              <div className='flex mb-2'>
-                <h2 className='text-neutral-200'>Use Village AI ✨</h2>
-                <label className="relative inline-flex items-center cursor-pointer ml-3">
-                  <input type="checkbox" value="" className="sr-only peer" onClick={() => setShowVillageAI(!showVillageAI)}/>
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 "></div>
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-        
 
-        {!showVillageAI && (
-          <textarea
-            style={{ height: '80vh' }}
-            rows={24}
-            className='w-full ml-2 text-white rounded-lg bg-transparent p-[2px] text-white rounded-lg border border-custom-gray'
-            placeholder={mainPlaceholder}
-          ></textarea>
-        )}
-      </div>
-
-      <div className='mr-[16px] ml-[16px]'>  
-          {showVillageAI && (
+      <div className='mr-[16px] ml-[16px] mt-10'>  
             <form onSubmit={onSubmit}>
             <div className='w-full flex overflow-y-scroll' > 
             <div className='w-1/2 pr-4 text-white overflow-scroll rounded-lg focus:z-10 focus:ring-4 focus:ring-gray-200 relative' 
                   style={{ height: '80vh' }} >
-                <button type="button"
-                    className="w-56 mr-2 text-sm font-normal h-10 text-white rounded-lg border  hover:text-white"
-                >
-                    No Proposal Category Selected
-                </button>
-                  <div className='flex flex-col mt-4'> 
-                  <div className='flex'>
+                  <div className='flex flex-col '> 
+                  <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
                    Abstract 
                    <div className="hover:text-blue-700 hover:cursor-pointer">
                       <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
@@ -217,12 +188,19 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                       onChange={handleAbstractInputChange}
                       placeholder='i.e. Proposal for Ape Energy, An energy drink with Ape branding'
                       rows={1}
-                      className="w-full mt-2 bg-transparent p-2 text-white rounded-lg border border-custom-gray "
+                      className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
+                      items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
+                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
                   />
-                  </div> 
+                  <div className="text-neutral-200 text-xs opacity-50 w-full mt-3 max-md:max-w-full">
+                    Tip: you can give a short description to get a proposal. But the more details you add, the better the proposal will be.
+                  </div>
+                  </div>
+                  <div className="items-start flex w-full h-px flex-col mt-3 border-b-blue-600 border-b border-solid max-md:max-w-full" />
+
                   <div className='flex flex-col mt-4'> 
-                  <div className='flex'>
-                    Author 
+                  <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
+                    Title 
                    <div className="hover:text-blue-700 hover:cursor-pointer">
                       <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
                     </div>
@@ -232,11 +210,30 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                       value={author}
                       placeholder='i.e. Enter team description'
                       rows={1}
-                      className="w-full mt-2 bg-transparent p-2 text-white rounded-lg border border-custom-gray "
+                      className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
+                      items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
+                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
                   />
                   </div>
+                    <div className='flex flex-col mt-4'> 
+                    <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
+                    Proposal Category 
+                    <div className="hover:text-blue-700 hover:cursor-pointer">
+                        <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
+                      </div>
+                    </div>
+                    <textarea
+                        onChange={handleAuthorInputChange}
+                        value={author}
+                        placeholder='i.e. Enter team description'
+                        rows={1}
+                        className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
+                        items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
+                        text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
+                    />
+                  </div>
                   <div className='flex flex-col mt-4'> 
-                  <div className='flex'>
+                  <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
                   Team Description 
                    <div className="hover:text-blue-700 hover:cursor-pointer">
                       <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
@@ -247,12 +244,14 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                       value={team}
                       placeholder='i.e. Enter team description'
                       rows={1}
-                      className="w-full mt-2 bg-transparent p-2 text-white rounded-lg border border-custom-gray "
-                  />
+                      className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
+                      items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
+                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
+                      />
                   </div>  
                   <div className='flex flex-col mt-4'>  
-                  <div className='flex'>
-                  Motivation 
+                  <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
+                  BENEFIT TO APECOIN ECOSYSTEM 
                    <div className="hover:text-blue-700 hover:cursor-pointer">
                       <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
                     </div>
@@ -262,27 +261,14 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                       value={motivation}
                       placeholder='i.e. A new way to bring more attention to the Ape brand'
                       rows={1}
-                      className="w-full mt-2 bg-transparent p-2 text-white rounded-lg border border-custom-gray "
-                  />
-                  </div>
-                  <div className='flex flex-col  mt-4'> 
-                  <div className='flex'>
-                  Rationale 
-                   <div className="hover:text-blue-700 hover:cursor-pointer">
-                      <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
-                    </div>
-                  </div>
-                  <textarea
-                      onChange={handleRationaleInputChange}
-                      value={rationale}
-                      placeholder='i.e. Aligns with the DAO’s goals of making Ape a global brand'
-                      rows={1}
-                      className="w-full mt-2 bg-transparent p-2 text-white rounded-lg border border-custom-gray "
+                      className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
+                      items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
+                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
                   />
                   </div>
 
                   <div className='flex flex-col  mt-4'> 
-                  <div className='flex'>
+                  <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
                   Key Terms (optional) 
                    <div className="hover:text-blue-700 hover:cursor-pointer">
                       <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
@@ -293,13 +279,15 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                       value={keyTerms}
                       placeholder='i.e. 3PL = 3rd party logistics'
                       rows={1}
-                      className="w-full mt-2 bg-transparent p-2 text-white rounded-lg border border-custom-gray "
+                      className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
+                      items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
+                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
                   />
                   </div>
 
                   <div className='flex flex-col  mt-4'> 
-                  <div className='flex'>
-                  Specifications 
+                  <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
+                  PLATFORMS & TECHNOLOGIES 
                    <div className="hover:text-blue-700 hover:cursor-pointer">
                       <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
                     </div>
@@ -309,13 +297,15 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                       value={specs}
                       placeholder='i.e. Pietra (https://www.pietrastudio.com/new-brands)'
                       rows={1}
-                      className="w-full mt-2 bg-transparent p-2 text-white rounded-lg border border-custom-gray "
+                      className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
+                      items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
+                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
                   />
                   </div>
 
                   <div className='flex flex-col  mt-4'> 
-                  <div className='flex'>
-                  Steps to Implement 
+                  <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
+                  STEPS TO IMPLEMENT & TIMELINE
                    <div className="hover:text-blue-700 hover:cursor-pointer">
                       <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
                     </div>
@@ -325,28 +315,14 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                       value={steps}
                       placeholder='i.e. Only one person needed 1. design products 2. source manufacturers, $15,000 3. set up digital shop'
                       rows={2}
-                      className="w-full mt-2 bg-transparent p-2 text-white rounded-lg border border-custom-gray "
-                  />
-                  </div>
-
-                  <div className='flex flex-col  mt-4'> 
-                  <div className='flex'>
-                  Timeline 
-                   <div className="hover:text-blue-700 hover:cursor-pointer">
-                      <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
-                    </div>
-                  </div>
-                  <textarea
-                      onChange={handleTimeInputChange}
-                      value={time}
-                      placeholder='i.e. products can be ready to order in 2 months. milestones: design products, source manufacturers, set up shop, complete first sale'
-                      rows={2}
-                      className="w-full mt-2 bg-transparent p-2 text-white rounded-lg border border-custom-gray "
+                      className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
+                      items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
+                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
                   />
                   </div>
 
                   <div className='flex flex-col mt-4'>
-            <div className='flex'>
+            <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
               Key Milestones
                    <div className="hover:text-blue-700 hover:cursor-pointer">
                       <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
@@ -354,15 +330,21 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   </div>
                 {milestones.map((milestone, index) => (
                     <div key={index} className='ml-10 mt-2'>
-                        <div className='flex'>
-                        <div className='mr-3 mt-4 flex'>
-                            <h2 className='mr-[5px]'>Milestone</h2>
-                            <h2 className='mr-1'>{milestone.number}</h2>
-                        </div>
+                      <div className="items-start flex w-full gap-2.5 mt-3 max-md:max-w-full max-md:flex-wrap">
+                        <button
+                        onClick={removeMilestone} disabled={milestones.length <= 1}
+                        className="justify-center items-center rounded self-center flex w-4 max-w-full flex-col my-auto border-[0.5px] border-solid border-blue-600">
+                          <img loading="lazy" srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&"className="aspect-square object-cover object-center w-full overflow-hidden self-stretch grow" />
+                        </button>
+                        <div className="items-end self-stretch flex flex-col grow shrink-0 basis-auto pl-5 max-md:max-w-full">
+                          <div className="justify-end items-start flex w-[529px] max-w-full gap-2.5 max-md:flex-wrap">
+                            <div className="text-neutral-200 text-xs leading-[183.33%] self-center my-auto">Milestone 1</div>
                             <textarea
                                 placeholder={'i.e. Design Products'}
                                 rows={1}
-                                className="w-full mt-2 bg-transparent p-2 text-white rounded-lg border border-custom-gray "
+                                className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
+                                items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
+                                text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
                                 value={milestone.description}
                                 onChange={(e) => {
                                     const newValue = e.target.value;
@@ -371,13 +353,15 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                                     setMilestones(newMilestones);
                                 }}
                             />
-                        </div>
-                        <div className='flex'>
-                            <h2 className='mr-12 mt-2'>Date</h2>
+                          </div>
+                          <div className="justify-end items-start flex w-[545px] max-w-full gap-2.5 mt-2 max-md:flex-wrap">
+                            <div className="text-neutral-200 text-xs leading-[183.33%] self-center my-auto">Required Time</div>
                             <textarea
                                 placeholder={'i.e. 10/10/2021'}
                                 rows={1}
-                                className="w-full mt-2 bg-transparent p-2 text-white rounded-lg border border-custom-gray "
+                                className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
+                                items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
+                                text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
                                 value={milestone.date}
                                 onChange={(e) => {
                                     const newDate = e.target.value;
@@ -386,14 +370,30 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                                     setMilestones(newMilestones);
                                 }}
                             />
+                          </div>
                         </div>
+                      </div>
                     </div>
+                    
                 ))}
-                <button onClick={addMilestone} className='mt-4'>&#x2b; Add Milestone</button>
             </div>
+            <button onClick={addMilestone} className='mt-4 flex text-neutral-200 text-xs leading-[183.33%] self-stretch'>
+              <label
+                htmlFor="milestone-input"
+                className="justify-center mr-2 items-center rounded border self-center flex w-4 max-w-full flex-col my-auto border-solid border-blue-600"
+              >
+                <img
+                  loading="lazy"
+                  srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&"className="aspect-square object-cover object-center w-full overflow-hidden self-stretch grow"
+                  alt="Milestone Image"
+                />
+              </label>
+              <h2 className='hover:text-blue'>Add Milestone</h2>
+            </button>
+
 
                    <div className='flex flex-col  mt-4'> 
-                  <div className='flex'>
+                  <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
                   Overall Cost
                    <div className="hover:text-blue-700 hover:cursor-pointer">
                       <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
@@ -404,18 +404,59 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                       onChange={handleCostInputChange}
                       value={cost}
                       rows={1}
-                      className="w-full mt-2 bg-transparent p-2 text-white rounded-lg border border-custom-gray "
+                      className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
+                      items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
+                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
                   />
                   </div>              
               </div>
-              <textarea
+              {/* <textarea
                   style={{ height: '80vh' , whiteSpace: "pre-wrap"}}
                   onChange={(e) => setDescription(e.target.value)}  // Update only the description state
                   value={description} 
                   rows={24}
-                  className="w-1/2 mb-2 bg-transparent p-2 overflow-scroll text-white rounded-lg border border-custom-gray"
+                  className="w-1/2 mb-2 bg-transparent p-2 overflow-scroll text-white rounded-lg border border-custom-gray
+                  text-neutral-400 text-xs self-stretch items-start rounded border 
+                  border-solid border-zinc-800 "
                   placeholder={mainPlaceholder}
-              />
+              /> */}
+              <textarea 
+              style={{ height: '80vh' , whiteSpace: "pre-wrap"}}
+              onChange={(e) => setDescription(e.target.value)} 
+              className="w-1/2 mb-2 bg-transparent p-2 overflow-scroll text-white rounded-lg border border-custom-gray
+              text-neutral-400 text-xs self-stretch items-start rounded border 
+              border-solid border-zinc-800 "
+    // className="text-neutral-400 text-xs self-stretch w-full items-start rounded border pb-0 mt-4 mx-1 pl-4 pr-4 pt-4 border-solid border-zinc-800 max-md:max-w-full"
+    placeholder={`*EXAMPLE PROPOSAL* TITLE: Ape Fest 2024 
+
+PROPOSAL CATEGORY: 
+Ecosystem Fund Allocation 
+
+TEAM DESCRIPTION: 
+The core team for Ape Fest consists of professionals with expertise in event production, artist management, marketing, and finance. We have successfully organized several large-scale events in the past and are confident in our ability to deliver a high-quality festival experience. 
+
+ABSTRACT: 
+We propose to create "Ape Fest," a music festival that is powered by ApeCoin and showcases Ape branding. The festival will feature renowned artists from various genres and provide a unique platform for promoting ApeCoin and its ecosystem. 
+
+BENEFITS TO APECOIN ECOSYSTEM: 
+Ape Fest will generate significant brand exposure for ApeCoin, attracting both crypto enthusiasts and music lovers. The festival will drive increased adoption of ApeCoin as attendees will be encouraged to use it for various transactions within the event, such as ticket purchases, merchandise, and food and beverage payments. Additionally, partnering with renowned artists will create a buzz around ApeCoin and position it as a forward-thinking token and community. 
+
+PLATFORMS AND TECHNOLOGIES: 
+Ticketing, operations, and communications with attendees for the festival will be managed through the Dice ticketing platform as well as Ape social media channels. 
+
+STEPS TO IMPLEMENT & TIMELINE: 
+Ape Fest will take place over three days at a spacious outdoor venue capable of accommodating thousands of attendees. We will leverage blockchain technology to facilitate secure and seamless transactions using ApeCoin. The estimated cost for implementing Ape Fest is $3,000,000, which includes venue rental, artist fees, marketing expenses, security, and logistical arrangements. 
+
+Month 1-2: Secure venue, finalize artist lineup, and develop the ApeCoin mobile app. 
+Month 3-6: Execute marketing and promotional campaigns, finalize partnerships with vendors, and set up ticketing systems. 
+Month 7-9: Conduct pre-event preparations, coordinate logistics, and engage with the ApeCoin community. 
+Month 10-12: Host Ape Fest, evaluate its success, and gather feedback for future improvements. 
+
+COST: 
+The overall cost to implement Ape Fest is estimated at $3,000,000. We are seeking funding support from the Ape Foundation to cover these expenses and ensure the successful execution of the music festival.`}
+/>
+
+              
             </div>
               <button
                 type="submit"
@@ -424,7 +465,6 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                 Generate
             </button>
             </form>
-          )}
           
           <button
             type="button"
