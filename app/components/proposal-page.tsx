@@ -39,10 +39,10 @@ function ProposalPage() {
   };
   
   
-  const handleTitleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      handleInputChange(e);
-      setTitle(e.target.value);
-  };
+  // const handleTitleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  //     handleInputChange(e);
+  //     setTitle(e.target.value);
+  // };
 
   const handleTeamInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     handleInputChange(e);
@@ -142,7 +142,7 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     <>
 
       <div className='mr-[16px] ml-[16px] mt-10'>  
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} className='overflow-x-hidden overflow-y-scroll scrollbar-hide'>
             <div className='w-full flex overflow-y-scroll' > 
             <div className='w-1/2 pr-4 text-white overflow-scroll rounded-lg focus:z-10 focus:ring-4 focus:ring-gray-200 relative' 
                   style={{ height: '80vh' }} >
@@ -177,8 +177,8 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                     </div>
                   </div>
                   <textarea
-                      onChange={handleTitleInputChange}
-                      value={title}
+                      // onChange={handleTitleInputChange}
+                      // value={title}
                       placeholder='i.e. Enter team description'
                       rows={1}
                       className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
@@ -392,13 +392,13 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   placeholder={mainPlaceholder}
               /> */}
               <textarea 
+              value={description} 
               style={{ height: '80vh' , whiteSpace: "pre-wrap"}}
               onChange={(e) => setDescription(e.target.value)} 
               className="w-1/2 mb-2 bg-transparent p-2 overflow-scroll text-white rounded-lg border border-custom-gray
               text-neutral-400 text-xs self-stretch items-start rounded border 
               border-solid border-zinc-800 "
-    // className="text-neutral-400 text-xs self-stretch w-full items-start rounded border pb-0 mt-4 mx-1 pl-4 pr-4 pt-4 border-solid border-zinc-800 max-md:max-w-full"
-    placeholder={`*EXAMPLE PROPOSAL* TITLE: Ape Fest 2024 
+              placeholder={`*EXAMPLE PROPOSAL* TITLE: Ape Fest 2024 
 
 PROPOSAL CATEGORY: 
 Ecosystem Fund Allocation 
@@ -430,7 +430,7 @@ The overall cost to implement Ape Fest is estimated at $3,000,000. We are seekin
               <button
                 type="submit"
                 className="text-sm mt-1 ml-[58vh] font-normal h-10 text-white w-20 rounded-3xl border border-blue-800 hover:bg-blue-700 hover:text-white focus:z-10 focus:ring-4"
-              >
+                >
                 Generate
             </button>
             </form>

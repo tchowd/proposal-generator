@@ -1,0 +1,12 @@
+/* In your global CSS file (e.g., styles.css) */
+.scrollbar-hide {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 11 */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    width: 0.25rem; /* Adjust as needed */
+    background-color: transparent; /* Adjust as needed */
+    display: none; /* Hide scrollbar in Webkit browsers (Chrome, Safari, etc.) */
+  }
+  
