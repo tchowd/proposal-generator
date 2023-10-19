@@ -21,6 +21,7 @@ function ProposalPage() {
   const [description, setDescription] = useState('');
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
+  const [category, setCategory] = useState('');
 
   const bioRef = useRef<null | HTMLDivElement>(null);
 
@@ -38,9 +39,9 @@ function ProposalPage() {
   };
   
   
-  const handleAuthorInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleTitleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       handleInputChange(e);
-      setAuthor(e.target.value);
+      setTitle(e.target.value);
   };
 
   const handleTeamInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -53,9 +54,9 @@ const handleMotivationInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) 
     setMotivation(e.target.value);
 };
 
-const handleRationaleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+const handleCategoryInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
   handleInputChange(e);
-  setRationale(e.target.value);
+  setCategory(e.target.value);
 };
 
 const handleKeyTermsInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -136,36 +137,6 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setMilestones(newMilestones);
   };
 
-    const mainPlaceholder = `
-    PROPOSAL NAME: 
-
-    PROPOSAL CATEGORY:
-    There are four different categories to choose from:
-        - Ecosystem Fund Allocation
-        - Informational
-        - Brand Decision 
-        - Process
-
-    TEAM DESCRIPTION:
-    Provide a brief introduction of yourself and your team if you’re requesting funding. If you’re seeking funding, each team member set to receive funds must separately sign a grant agreement and undergo KYC verification before funds are released.
-    
-    ABSTRACT:
-    A brief summary outlining your proposal. This section will be showcased on Snapshot for the community’s consideration and should effectively communicate key details about your proposal.
-    
-    BENEFIT TO APECOIN ECOSYSTEM:
-    Explain how your proposal will benefit the ApeCoin ecosystem, and how it aligns with the APE Community’s core mission and values 2. This section will be visible to voters on Snapshot.
-    
-    KEY TERMS:
-    Definitions of any terms within the proposal that are unique to the proposal, new to the APE Community, and/or industry-specific (optional).
-    
-    PLATFORMS & TECHNOLOGIES:
-    A detailed breakdown of the platforms and technologies that will be used, if any.
-    
-    STEPS TO IMPLEMENT & TIMELINE:
-    Outline the steps to implement your proposal, including the associated costs, key performance indicators, personnel requirements, any expectations of the Ape Foundation, and other resources needed for each step where applicable. This section also provides relevant timing details, including the project’s start date and key milestones.
-    
-    OVERALL COST:
-    Summarize the total budget associated with implementing the proposal.`;
 
   return (
     <>
@@ -206,8 +177,8 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                     </div>
                   </div>
                   <textarea
-                      onChange={handleAuthorInputChange}
-                      value={author}
+                      onChange={handleTitleInputChange}
+                      value={title}
                       placeholder='i.e. Enter team description'
                       rows={1}
                       className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
@@ -223,8 +194,8 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                       </div>
                     </div>
                     <textarea
-                        onChange={handleAuthorInputChange}
-                        value={author}
+                        onChange={handleCategoryInputChange}
+                        value={category}
                         placeholder='i.e. Enter team description'
                         rows={1}
                         className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
@@ -455,8 +426,6 @@ Month 10-12: Host Ape Fest, evaluate its success, and gather feedback for future
 COST: 
 The overall cost to implement Ape Fest is estimated at $3,000,000. We are seeking funding support from the Ape Foundation to cover these expenses and ensure the successful execution of the music festival.`}
 />
-
-              
             </div>
               <button
                 type="submit"
