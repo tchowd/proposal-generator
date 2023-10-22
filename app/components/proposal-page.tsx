@@ -64,7 +64,7 @@ const handleBenefitsInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setBenefits(e.target.value);
 };
 
-const handleCategoryInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+const handleCategoryInputChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => {
   handleInputChange(e);
   setCategory(e.target.value);
 };
@@ -168,9 +168,12 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                             </div>
                         )}
                     </div>
+
+
+
                   </div>
                   <textarea
-                      required
+                      // required
                       value={abstract}
                       onChange={handleAbstractInputChange}
                       placeholder='i.e. Proposal for Ape Energy, An energy drink with Ape branding'
@@ -202,27 +205,31 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                     <div className='flex flex-col mt-4'> 
                     <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
                     Proposal Category 
-                    {/* <div
-                      className="hover:text-blue-700 hover:cursor-pointer relative"
-                      onClick={() => toggleTooltip(1)}
-                    >
-                      <AiOutlineQuestionCircle style={{ marginTop: '5px', marginLeft: '0.5rem' }} />
-                      {tooltipVisible[1] && (
-                        <div className="absolute w-52 top-0 left-full ml-2 bg-[#0054F9] text-white pl-5 rounded shadow-lg">
-                          This is a tooltip!
-                        </div>
-                      )}
-                    </div> */}
                     </div>
-                    <textarea
+                    {/* <button
                         onChange={handleCategoryInputChange}
                         value={category}
                         placeholder='i.e. Enter team description'
-                        rows={1}
+                        // rows={1}
                         className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
                         items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
                         text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
-                    />
+                    /> */}
+                     <label  htmlFor="category-select" className="mt-3 w-full flex flex-col items-start p-2.5 bg-transparent border border-solid border-zinc-800 rounded-lg text-xs text-neutral-400 opacity-50">
+                        Select Category
+                        <select 
+                            id="category-select" 
+                            className="mt-2 w-full bg-transparent text-white rounded-lg"
+                            onChange={handleCategoryInputChange}
+                            value={category}
+                        >
+                            <option value="brand">Brand Decision</option>
+                            <option value="fund">Fund Allocation</option>
+                            <option value="informational">Informational</option>
+                            <option value="process">Process</option>
+                        </select>
+                    </label>
+
                   </div>
                   <div className='flex flex-col mt-4'> 
                   <div className='flex'>
@@ -254,10 +261,21 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                       />
                   </div>  
                   <div className='flex flex-col mt-4'>  
-                  <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
-                  BENEFIT TO APECOIN ECOSYSTEM 
-                   <div className="hover:text-blue-700 hover:cursor-pointer">
-                      <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
+                  <div className='flex'>
+                  <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>BENEFIT TO APECOIN ECOSYSTEM </h1> 
+                  <div
+                        className="hover:text-blue-700 hover:cursor-pointer relative"
+                        onClick={() => toggleTooltip(2)}
+                    >
+                        <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
+                        {tooltipVisible[2] && (
+                            <div 
+                            style={{ width: '500px' }}
+                            className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip
+                            text-neutral-200 text-xs leading-[183.33%] self-stretc"
+                            >
+                          Explain how your proposal will benefit the ApeCoin ecosystem, and how it aligns with the APE Community’s core mission and values. This section will be visible to voters on Snapshot.                            </div>
+                        )}
                     </div>
                   </div>
                   <textarea
@@ -272,10 +290,22 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   </div>
 
                   <div className='flex flex-col  mt-4'> 
-                  <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
-                  Key Terms (optional) 
-                   <div className="hover:text-blue-700 hover:cursor-pointer">
-                      <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
+                  <div className='flex '>
+                  <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'> Key Terms (optional)  </h1> 
+
+                  <div
+                        className="hover:text-blue-700 hover:cursor-pointer relative"
+                        onClick={() => toggleTooltip(3)}
+                    >
+                        <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
+                        {tooltipVisible[3] && (
+                            <div 
+                            style={{ width: '500px' }}
+                            className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip
+                            text-neutral-200 text-xs leading-[183.33%] self-stretc"
+                            >
+                          Definitions of any terms within the proposal that are unique to the proposal, new to the APE Community, and/or industry-specific (optional).                           </div>
+                        )}
                     </div>
                   </div>
                   <textarea
@@ -290,10 +320,24 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   </div>
 
                   <div className='flex flex-col  mt-4'> 
-                  <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
-                  PLATFORMS & TECHNOLOGIES 
-                   <div className="hover:text-blue-700 hover:cursor-pointer">
-                      <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
+                  <div className='flex'>
+                   
+                  <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'> PLATFORMS & TECHNOLOGIES  </h1> 
+
+                  <div
+                        className="hover:text-blue-700 hover:cursor-pointer relative"
+                        onClick={() => toggleTooltip(4)}
+                    >
+                        <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
+                        {tooltipVisible[4] && (
+                            <div 
+                            style={{ width: '500px' }}
+                            className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip
+                            text-neutral-200 text-xs leading-[183.33%] self-stretc"
+                            >
+                            A detailed breakdown of the platforms and technologies that will be used, if any.
+                          </div>
+                        )}
                     </div>
                   </div>
                   <textarea
@@ -308,10 +352,23 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   </div>
 
                   <div className='flex flex-col  mt-4'> 
-                  <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
-                  STEPS TO IMPLEMENT & TIMELINE
-                   <div className="hover:text-blue-700 hover:cursor-pointer">
-                      <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
+                  <div className='flex '>
+                  <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>  STEPS TO IMPLEMENT & TIMELINE  </h1> 
+
+                  <div
+                        className="hover:text-blue-700 hover:cursor-pointer relative"
+                        onClick={() => toggleTooltip(5)}
+                    >
+                        <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
+                        {tooltipVisible[5] && (
+                            <div 
+                            style={{ width: '500px' }}
+                            className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip
+                            text-neutral-200 text-xs leading-[183.33%] self-stretc"
+                            >
+                            Outline the steps to implement your proposal, including the associated costs, key performance indicators, personnel requirements, any expectations of the Ape Foundation, and other resources needed for each step where applicable. This section also provides relevant timing details, including the project’s start date and key milestones.
+                          </div>
+                        )}
                     </div>
                   </div>
                   <textarea
@@ -326,10 +383,22 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   </div>
 
                   <div className='flex flex-col mt-4'>
-            <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
-              Key Milestones
-                   <div className="hover:text-blue-700 hover:cursor-pointer">
-                      <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
+            <div className='flex '>
+              <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>  Key Milestones  </h1> 
+
+                    <div
+                        className="hover:text-blue-700 hover:cursor-pointer relative"
+                        onClick={() => toggleTooltip(6)}
+                    >
+                        <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
+                        {tooltipVisible[6] && (
+                            <div 
+                            style={{ width: '500px' }}
+                            className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip
+                            text-neutral-200 text-xs leading-[183.33%] self-stretc"
+                            >
+                          Outline the steps to implement your proposal, including the associated costs, key performance indicators, personnel requirements, any expectations of the Ape Foundation, and other resources needed for each step where applicable. This section also provides relevant timing details, including the project’s start date and key milestones.                          </div>
+                        )}
                     </div>
                   </div>
                 {milestones.map((milestone, index) => (
@@ -397,10 +466,23 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 
 
                    <div className='flex flex-col  mt-4'> 
-                  <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
-                  Overall Cost
-                   <div className="hover:text-blue-700 hover:cursor-pointer">
-                      <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
+                  <div className='flex '>
+                  <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>  Overall Cost </h1> 
+
+                  <div
+                        className="hover:text-blue-700 hover:cursor-pointer relative"
+                        onClick={() => toggleTooltip(7)}
+                    >
+                        <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
+                        {tooltipVisible[7] && (
+                            <div 
+                            style={{ width: '500px' }}
+                            className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip
+                            text-neutral-200 text-xs leading-[183.33%] self-stretc"
+                            >
+                            Summarize the total budget associated with implementing the proposal. This section will be visible to voters on Snapshot.
+                          </div>
+                        )}
                     </div>
                   </div>
                   <textarea
@@ -425,6 +507,9 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   placeholder={mainPlaceholder}
               /> */}
               {/* //COPY THIS TEXTAREA */}
+              <div className='flex'>
+                
+              </div>
               <textarea 
                 ref={descriptionRef}
                 value={description} 
@@ -464,15 +549,16 @@ The overall cost to implement Ape Fest is estimated at $3,000,000. We are seekin
             </div>
               <button
                 type="submit"
-                className="text-white text-center text-base font-bold leading-[146.667%] self-stretch justify-center items-center bg-blue-600 px-5 py-2 rounded-[100px]"
+                className="text-white right-0 text-center text-base font-bold leading-[146.667%] self-stretch justify-center items-center bg-blue-600 px-5 py-2 rounded-[100px]"
                 >
                 Generate
             </button>
-            {/* <button
+            {/* NEED TO MOVE */}
+            <button
               onClick={handleCopyToClipboard}
-              className="absolute bottom-0 right-0 mr-4 text-white text-center text-base font-bold leading-[146.667%] self-stretch justify-center items-center border px-5 py-2 rounded-[100px] border-solid border-blue-600"> 
+              className="absolute  right-0 mr-4 mb-52 text-white text-center text-base font-bold leading-[146.667%] self-stretch justify-center items-center border px-5 py-2 rounded-[100px] border-solid border-blue-600"> 
               Copy to clipboard
-            </button> */}
+            </button>
             </form>
           
          
