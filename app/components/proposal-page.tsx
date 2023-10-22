@@ -10,7 +10,6 @@ function ProposalPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showVillageAI, setShowVillageAI] = useState(false);
   const [benefits, setBenefits] = useState('');
-  const [motivation, setMotivation] = useState('');
   const [rationale, setRationale] = useState('');
   const [keyTerms, setKeyTerms] = useState('');
   const [specs, setSpecs] = useState('');
@@ -22,14 +21,25 @@ function ProposalPage() {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [category, setCategory] = useState('');
+  // const descriptionRef = useRef(null);
+
 
   const bioRef = useRef<null | HTMLDivElement>(null);
 
+  const descriptionRef = useRef<HTMLTextAreaElement | null>(null); // Add type to useRef
+
+  const handleCopyToClipboard = () => {
+    if (descriptionRef.current) {
+      const textarea = descriptionRef.current as HTMLTextAreaElement;
+      textarea.select();
+      document.execCommand('copy');
+    }
+  };
 
   const { input, handleInputChange, handleSubmit, isLoading, messages } =
     useChat({
       body: {
-        abstract, author, team, motivation, rationale, keyTerms, specs, steps, time, cost
+        abstract, title, author, team, benefits, rationale, keyTerms, specs, steps, time, cost
       },
     });
 
@@ -39,19 +49,19 @@ function ProposalPage() {
   };
   
   
-  // const handleTitleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-  //     handleInputChange(e);
-  //     setTitle(e.target.value);
-  // };
+  const handleTitleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      handleInputChange(e);
+      setTitle(e.target.value);
+  };
 
   const handleTeamInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     handleInputChange(e);
     setTeam(e.target.value);
 };
 
-const handleMotivationInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+const handleBenefitsInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     handleInputChange(e);
-    setMotivation(e.target.value);
+    setBenefits(e.target.value);
 };
 
 const handleCategoryInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -90,20 +100,6 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
   const formattedBios = formatGeneratedBios(generatedBios || '');
   const processedData = extractIncluding2(generatedBios || '');
   
-  // const onSubmit = (e: any) => {
-  //   e.preventDefault();
-  //   setAbstract(input);
-  //   setAuthor(input);
-  //   setTeam(input);
-  //   setMotivation(input);
-  //   setRationale(input);
-  //   setKeyTerms(input);
-  //   setSpecs(input);
-  //   setSteps(input);
-  //   setTime(input);
-  //   setCost(input);
-  //   handleSubmit(e);
-  // };
 
   const onSubmit = (e: any) => {
     handleSubmit(e);
@@ -125,7 +121,8 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
   };
   
   const [milestones, setMilestones] = useState<Milestone[]>([{ number: 1, date: '', description: '' }]);
-  
+  const [tooltipVisible, setTooltipVisible] = useState<Array<boolean>>([]);
+
   const addMilestone = () => {
       const newNumber = milestones.length + 1;
       setMilestones(prevMilestones => [...prevMilestones, { number: newNumber, date: '', description: '' }]);
@@ -137,6 +134,13 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setMilestones(newMilestones);
   };
 
+  const toggleTooltip = (index: number) => {
+    setTooltipVisible(prevTooltipVisible => {
+        const newTooltipVisible = [...prevTooltipVisible];
+        newTooltipVisible[index] = !newTooltipVisible[index];
+        return newTooltipVisible;
+    });
+};
 
   return (
     <>
@@ -145,12 +149,24 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
             <form onSubmit={onSubmit} className='overflow-x-hidden overflow-y-scroll scrollbar-hide'>
             <div className='w-full flex overflow-y-scroll' > 
             <div className='w-1/2 pr-4 text-white overflow-scroll rounded-lg focus:z-10 focus:ring-4 focus:ring-gray-200 relative' 
-                  style={{ height: '80vh' }} >
+                  style={{ height: '70vh' }} >
                   <div className='flex flex-col '> 
-                  <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
-                   Abstract 
-                   <div className="hover:text-blue-700 hover:cursor-pointer">
-                      <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
+                  <div className='flex '>
+                  <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>Abstract </h1>
+                   <div
+                        className="hover:text-blue-700 hover:cursor-pointer relative"
+                        onClick={() => toggleTooltip(0)}
+                    >
+                        <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
+                        {tooltipVisible[0] && (
+                            <div 
+                            style={{ width: '500px' }}
+                            className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip
+                            text-neutral-200 text-xs leading-[183.33%] self-stretc"
+                            >
+                              Provide a brief introduction of yourself and your team if you’re requesting funding. If you’re seeking funding, each team member set to receive funds must separately sign a grant agreement and undergo KYC verification before funds are released.
+                            </div>
+                        )}
                     </div>
                   </div>
                   <textarea
@@ -167,17 +183,14 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                     Tip: you can give a short description to get a proposal. But the more details you add, the better the proposal will be.
                   </div>
                   </div>
-                  <div className="items-start flex w-full h-px flex-col mt-3 border-b-blue-600 border-b border-solid max-md:max-w-full" />
+                  <div className="border-dashed border-amber-400 items-start flex w-full h-px flex-col mt-3 border-b-blue-600 border-b border-solid max-md:max-w-full" />
 
                   <div className='flex flex-col mt-4'> 
                   <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
                     Title 
-                   <div className="hover:text-blue-700 hover:cursor-pointer">
-                      <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
-                    </div>
                   </div>
                   <textarea
-                      // onChange={handleTitleInputChange}
+                      onChange={handleTitleInputChange}
                       // value={title}
                       placeholder='i.e. Enter team description'
                       rows={1}
@@ -189,9 +202,17 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                     <div className='flex flex-col mt-4'> 
                     <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
                     Proposal Category 
-                    <div className="hover:text-blue-700 hover:cursor-pointer">
-                        <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
-                      </div>
+                    {/* <div
+                      className="hover:text-blue-700 hover:cursor-pointer relative"
+                      onClick={() => toggleTooltip(1)}
+                    >
+                      <AiOutlineQuestionCircle style={{ marginTop: '5px', marginLeft: '0.5rem' }} />
+                      {tooltipVisible[1] && (
+                        <div className="absolute w-52 top-0 left-full ml-2 bg-[#0054F9] text-white pl-5 rounded shadow-lg">
+                          This is a tooltip!
+                        </div>
+                      )}
+                    </div> */}
                     </div>
                     <textarea
                         onChange={handleCategoryInputChange}
@@ -204,10 +225,22 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                     />
                   </div>
                   <div className='flex flex-col mt-4'> 
-                  <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
-                  Team Description 
-                   <div className="hover:text-blue-700 hover:cursor-pointer">
-                      <AiOutlineQuestionCircle style={{marginTop: '5px', marginLeft: '0.5rem'}} />
+                  <div className='flex'>
+                  <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>Team Description </h1>
+                  <div
+                        className="hover:text-blue-700 hover:cursor-pointer relative"
+                        onClick={() => toggleTooltip(1)}
+                    >
+                        <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
+                        {tooltipVisible[1] && (
+                            <div 
+                            style={{ width: '500px' }}
+                            className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip
+                            text-neutral-200 text-xs leading-[183.33%] self-stretc"
+                            >
+                              Provide a brief introduction of yourself and your team if you’re requesting funding. If you’re seeking funding, each team member set to receive funds must separately sign a grant agreement and undergo KYC verification before funds are released.
+                            </div>
+                        )}
                     </div>
                   </div>
                   <textarea
@@ -228,8 +261,8 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                     </div>
                   </div>
                   <textarea
-                      onChange={handleMotivationInputChange}
-                      value={motivation}
+                      onChange={handleBenefitsInputChange}
+                      value={benefits}
                       placeholder='i.e. A new way to bring more attention to the Ape brand'
                       rows={1}
                       className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
@@ -285,7 +318,7 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                       onChange={handleStepsInputChange}
                       value={steps}
                       placeholder='i.e. Only one person needed 1. design products 2. source manufacturers, $15,000 3. set up digital shop'
-                      rows={2}
+                      rows={1}
                       className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
                       items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
                       text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
@@ -309,7 +342,7 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                         </button>
                         <div className="items-end self-stretch flex flex-col grow shrink-0 basis-auto pl-5 max-md:max-w-full">
                           <div className="justify-end items-start flex w-[529px] max-w-full gap-2.5 max-md:flex-wrap">
-                            <div className="text-neutral-200 text-xs leading-[183.33%] self-center my-auto">Milestone 1</div>
+                            <div className="text-neutral-200 text-xs leading-[183.33%] self-center my-auto">Milestone</div>
                             <textarea
                                 placeholder={'i.e. Design Products'}
                                 rows={1}
@@ -326,7 +359,7 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                             />
                           </div>
                           <div className="justify-end items-start flex w-[545px] max-w-full gap-2.5 mt-2 max-md:flex-wrap">
-                            <div className="text-neutral-200 text-xs leading-[183.33%] self-center my-auto">Required Time</div>
+                            <div className="text-neutral-200 text-xs leading-[183.33%] self-center my-auto"> Time</div>
                             <textarea
                                 placeholder={'i.e. 10/10/2021'}
                                 rows={1}
@@ -391,14 +424,16 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   border-solid border-zinc-800 "
                   placeholder={mainPlaceholder}
               /> */}
+              {/* //COPY THIS TEXTAREA */}
               <textarea 
-              value={description} 
-              style={{ height: '80vh' , whiteSpace: "pre-wrap"}}
-              onChange={(e) => setDescription(e.target.value)} 
-              className="w-1/2 mb-2 bg-transparent p-2 overflow-scroll text-white rounded-lg border border-custom-gray
-              text-neutral-400 text-xs self-stretch items-start rounded border 
-              border-solid border-zinc-800 "
-              placeholder={`*EXAMPLE PROPOSAL* TITLE: Ape Fest 2024 
+                ref={descriptionRef}
+                value={description} 
+                style={{ height: '70vh' , whiteSpace: "pre-wrap"}}
+                onChange={(e) => setDescription(e.target.value)} 
+                className="w-1/2 mb-2 bg-transparent p-2 overflow-scroll text-white rounded-lg border border-custom-gray
+                text-neutral-400 text-xs self-stretch items-start rounded border 
+                border-solid border-zinc-800 "
+                placeholder={`*EXAMPLE PROPOSAL* TITLE: Ape Fest 2024 
 
 PROPOSAL CATEGORY: 
 Ecosystem Fund Allocation 
@@ -429,18 +464,19 @@ The overall cost to implement Ape Fest is estimated at $3,000,000. We are seekin
             </div>
               <button
                 type="submit"
-                className="text-sm mt-1 ml-[58vh] font-normal h-10 text-white w-20 rounded-3xl border border-blue-800 hover:bg-blue-700 hover:text-white focus:z-10 focus:ring-4"
+                className="text-white text-center text-base font-bold leading-[146.667%] self-stretch justify-center items-center bg-blue-600 px-5 py-2 rounded-[100px]"
                 >
                 Generate
             </button>
+            {/* <button
+              onClick={handleCopyToClipboard}
+              className="absolute bottom-0 right-0 mr-4 text-white text-center text-base font-bold leading-[146.667%] self-stretch justify-center items-center border px-5 py-2 rounded-[100px] border-solid border-blue-600"> 
+              Copy to clipboard
+            </button> */}
             </form>
           
-          <button
-            type="button"
-            className="absolute bottom-0 right-0 mb-4 mr-4 text-white bg-blue-700 hover:bg-blue-800 h-10 font-normal rounded-3xl text-sm  w-20"> 
-              Create
-          </button>
-      </div>
+         
+          </div>
     </>
   )
 }

@@ -23,7 +23,7 @@ export async function POST(req: Request) {
         content: `
         Generate a complete 250 word proposal. 
 
-        ##### Do not provide information that was not provided and use EXAMPLE FOR REFERENCE as a guide. 
+        ##### Do not provide information that was not provided. 
         ##### The structure should look like this:
 
         PROPOSAL CATEGORY:
