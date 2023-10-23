@@ -11,7 +11,7 @@ const openai = new OpenAIApi(config);
 export const runtime = 'edge';
 
 export async function POST(req: Request) {
-  const { team, author, abstract, motivation, rationale,keyTerms, specs, steps, time, milestones, cost  } = await req.json();
+  const { abstract, title, category, team, benefits, keyTerms, specs, steps, time, cost  } = await req.json();
 
   // Ask OpenAI for a streaming completion given the prompt
   const response = await openai.createChatCompletion({
@@ -26,30 +26,28 @@ export async function POST(req: Request) {
         ##### Do not provide information that was not provided. 
         ##### The structure should look like this:
 
+        Title:
+        - Use ${title} as the title.
+        - The title of the proposal.
+
         PROPOSAL CATEGORY:
-          -  Brand Decision 15 for proposals that the DAO attaches its name to, including projects and collaborations OR 
+          - Use ${category} as the category.
+          -  ONLY ONE: Brand Decision 15 for proposals that the DAO attaches its name to, including projects and collaborations OR 
              Ecosystem Fund Allocation 27 for proposals that rely on funds from the Ape Foundation in order to be executed OR
              Informational for proposals that suggest changes to the guidelines or that provide information to the ApeCoin community OR 
             Process for proposals about making changes to any of the decision-making processes. This covers everything from submitting an AIP to the voting process, to the tools and platforms used. 
 
-          ABSTRACT: 
+        ABSTRACT: 
           - Use ${abstract} as the abstract.
           - Two or three sentences that summarize the proposal. 
 
-        AUTHOR DESCRIPTION:	
-            - Use ${author} as the author description.
-            - A brief background of yourself. If you are requesting funding, you must sign a grant agreement and undergo a KYC verification process before the funds can be disbursed. Enter background. 
-
+        
         TEAM DESCRIPTION:	
             - Use ${team} as the team description.
             - A brief background of your team involved, if any. If direct funding is intended for multiple members of your team, each of those members must individually sign a grant agreement and undergo a KYC verification procedure before the funds can be released to them. Enter background. 
 
-        MOTIVATION:
-          - Use ${motivation} as the motivation description.
-          - A statement on why the APE Community should implement the proposal. Enter motivation. Rationale | An explanation of how the proposal aligns with the APE Community’s mission and guiding values. Enter rationale. 
-
         BENEFITS TO APECOIN ECOSYSTEM:
-          - Use ${rationale} as the benefits description.
+          - Use ${benefits} as the benefits description.
           - Explain how your proposal will benefit the ApeCoin ecosystem. If your AIP is requesting funding, explain in detail the benefit in relation to the amount of funding that you are requesting. Enter benefit. 
 
         KEY TERMS (OPTIONAL):
