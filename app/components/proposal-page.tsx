@@ -43,6 +43,8 @@ function ProposalPage() {
       },
     });
 
+    
+
   const handleAbstractInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       handleInputChange(e);
       setAbstract(e.target.value);
@@ -64,8 +66,10 @@ const handleBenefitsInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setBenefits(e.target.value);
 };
 
-const handleCategoryInputChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => {
-  handleInputChange(e);
+
+
+const handleCategoryInputChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  handleInputChange(e as any); // Forcing type "any" as a workaround, but not the best practice
   setCategory(e.target.value);
 };
 
@@ -103,7 +107,7 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 
   const onSubmit = (e: any) => {
     handleSubmit(e);
-};
+  };
 
 
   useEffect(() => {
@@ -206,21 +210,13 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                     <div className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>
                     Proposal Category 
                     </div>
-                    {/* <button
-                        onChange={handleCategoryInputChange}
-                        value={category}
-                        placeholder='i.e. Enter team description'
-                        // rows={1}
-                        className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
-                        items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
-                        text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
-                    /> */}
+
                      <label  htmlFor="category-select" className="mt-3 w-full flex flex-col items-start p-2.5 bg-transparent border border-solid border-zinc-800 rounded-lg text-xs text-neutral-400 opacity-50">
                         Select Category
                         <select 
                             id="category-select" 
                             className="mt-2 w-full bg-transparent text-white rounded-lg"
-                            onChange={handleCategoryInputChange}
+                            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleCategoryInputChange(e)}
                             value={category}
                         >
                             <option value="brand">Brand Decision</option>
