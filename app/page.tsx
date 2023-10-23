@@ -5,7 +5,7 @@ import Footer from './components/footer'
 
 export default function Home() {
   return (
-    <main className=" ">
+    <main className="bg-black">
       <Header />
         <ProposalPage />
       <Footer />
