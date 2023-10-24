@@ -22,6 +22,8 @@ function ProposalPage() {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [category, setCategory] = useState('');
+  const [showMilestones, setShowMilestones] = useState(false);
+
   // const descriptionRef = useRef(null);
 
 
@@ -119,25 +121,33 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setDescription(processedData);
   }, [processedData]);
 
+  // type Milestone = {
+  //   number: number;
+  //   date: string;
+  //   description?: string; // Add this line
+  // };
+  
+  // const [milestones, setMilestones] = useState([]); // Assuming initial state is an empty array
+  const [tooltipVisible, setTooltipVisible] = useState<Array<boolean>>([]);
   type Milestone = {
-    number: number;
+    description: string;
     date: string;
-    description?: string; // Add this line
   };
   
-  const [milestones, setMilestones] = useState<Milestone[]>([{ number: 1, date: '', description: '' }]);
-  const [tooltipVisible, setTooltipVisible] = useState<Array<boolean>>([]);
+  const [milestones, setMilestones] = useState<Milestone[]>([]);
 
   const addMilestone = () => {
-      const newNumber = milestones.length + 1;
-      setMilestones(prevMilestones => [...prevMilestones, { number: newNumber, date: '', description: '' }]);
+    const newMilestone = {
+      description: '', // default empty string or you can set a placeholder
+      date: '', // default empty string or you can set a placeholder
     };
-
-  const removeMilestone = () => {
-      const newMilestones = [...milestones];
-      newMilestones.pop();
-      setMilestones(newMilestones);
+    setMilestones([...milestones, newMilestone]);
   };
+
+  const removeMilestone = (indexToRemove: any) => {
+    const newMilestones = milestones.filter((_, index) => index !== indexToRemove);
+    setMilestones(newMilestones);
+};
 
   const toggleTooltip = (index: number) => {
     setTooltipVisible(prevTooltipVisible => {
@@ -146,6 +156,10 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         return newTooltipVisible;
     });
 };
+
+// const removeAllMilestones = () => {
+//   setMilestones([]);
+// };
 
   return (
     <>
@@ -381,14 +395,40 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                         
                     </div>
                   </div>
-                {milestones.map((milestone, index) => (
-                    <div key={index} className='ml-10 mt-2'>
+                  {/* <button onClick={() => setShowMilestones(!showMilestones)}>
+                    Toggle Milestones
+                  </button> */}
+
+                  {/* Button to add a new milestone */}
+                  <button onClick={addMilestone} className='mt-4 flex text-neutral-200 text-xs leading-[183.33%] self-stretch group'>
+                      <label
+                          htmlFor="milestone-input"
+                          className="justify-center hover:cursor-pointer mr-2 items-center rounded border self-center flex w-4 max-w-full flex-col my-auto border-solid border-blue-600 group-hover:border-green-500"
+                      >
+                          <img
+                              loading="lazy"
+                              srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&"
+                              className="aspect-square object-cover object-center w-full overflow-hidden self-stretch grow"
+                              alt="Milestone Image"
+                          />
+                      </label>
+                      <h2 className=''>Add Milestone</h2>
+                  </button>
+
+
+                  {milestones.length > 0 && milestones.map((milestone, index) => (
+                        <div key={index} className='ml-10 mt-2'>
                       <div className="items-start flex w-full gap-2.5 mt-3 max-md:max-w-full max-md:flex-wrap">
-                        <button
-                        onClick={removeMilestone} disabled={milestones.length <= 1}
-                        className="justify-center items-center rounded self-center flex w-4 max-w-full flex-col my-auto border-[0.5px] border-solid border-blue-600">
-                          <img loading="lazy" srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&"className="aspect-square object-cover object-center w-full overflow-hidden self-stretch grow" />
-                        </button>
+                      <button
+                        onClick={() => removeMilestone(index)}
+                        className="justify-center items-center rounded self-center flex w-4 max-w-full flex-col my-auto border-[0.5px] border-solid border-blue-600 hover:border-red-500">
+                        <img 
+                            loading="lazy" 
+                            srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/aa818d25-11e4-4493-ac02-8e997dfa5020?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&"
+                            className="aspect-square object-cover object-center w-full overflow-hidden self-stretch grow"
+                        />
+                    </button>
+
                         <div className="items-end self-stretch flex flex-col grow shrink-0 basis-auto pl-5 max-md:max-w-full">
                           <div className="justify-end items-start flex w-[529px] max-w-full gap-2.5 max-md:flex-wrap">
                             <div className="text-neutral-200 text-xs leading-[183.33%] self-center my-auto">Milestone</div>
@@ -427,24 +467,9 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                         </div>
                       </div>
                     </div>
-                    
-                ))}
+                      ))}
+                
             </div>
-            <button onClick={addMilestone} className='mt-4 flex text-neutral-200 text-xs leading-[183.33%] self-stretch'>
-              <label
-                htmlFor="milestone-input"
-                className="justify-center mr-2 items-center rounded border self-center flex w-4 max-w-full flex-col my-auto border-solid border-blue-600"
-              >
-                <img
-                  loading="lazy"
-                  srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/1dd1ce48-660a-45e0-b147-cc0fcfae3904?apiKey=d695cb273b1e4ee4bdb4f7c085ba03d0&"className="aspect-square object-cover object-center w-full overflow-hidden self-stretch grow"
-                  alt="Milestone Image"
-                />
-              </label>
-              <h2 className='hover:text-blue'>Add Milestone</h2>
-            </button>
-
-
                    <div className='flex flex-col  mt-4'> 
                   <div className='flex '>
                   <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>  Overall Cost </h1> 
