@@ -45,6 +45,7 @@ function ProposalPage() {
     setIsClicked(true);
 }
 
+
   const { input, handleInputChange, handleSubmit, isLoading, messages } =
     useChat({
       body: {
@@ -505,17 +506,6 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   />
                   </div>              
               </div>
-              {/* <textarea
-                  style={{ height: '80vh' , whiteSpace: "pre-wrap"}}
-                  onChange={(e) => setDescription(e.target.value)}  // Update only the description state
-                  value={description} 
-                  rows={24}
-                  className="w-1/2 mb-2 bg-transparent p-2 overflow-scroll text-white rounded-lg border border-custom-gray
-                  text-neutral-400 text-xs self-stretch items-start rounded border 
-                  border-solid border-zinc-800 "
-                  placeholder={mainPlaceholder}
-              /> */}
-              {/* //COPY THIS TEXTAREA */}
               <div className="flex flex-col items-start w-1/2">
               <div className="text-neutral-200 text-base font-medium leading-[100%] uppercase self-stretch mb-4">
                   Preview
@@ -525,8 +515,8 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   value={description} 
                   style={{ width: '100%', height: '65vh', whiteSpace: "pre-wrap"}}
                   onChange={(e) => setDescription(e.target.value)} 
-                  className="bg-transparent p-2 overflow-scroll text-white rounded-lg border border-custom-gray text-neutral-400 text-xs rounded border-solid border-zinc-800 resize-none"
-                   placeholder={`*EXAMPLE PROPOSAL* TITLE: Ape Fest 2024 
+                  className="bg-transparent p-2 text-white rounded-lg border border-custom-gray text-neutral-400 text-xs rounded border-solid border-zinc-800 resize-none overflow-y-auto"
+                  placeholder={`*EXAMPLE PROPOSAL* TITLE: Ape Fest 2024 
 
 PROPOSAL CATEGORY: 
 Ecosystem Fund Allocation 
