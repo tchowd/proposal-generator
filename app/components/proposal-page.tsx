@@ -23,6 +23,7 @@ function ProposalPage() {
   const [author, setAuthor] = useState('');
   const [category, setCategory] = useState('');
   const [showMilestones, setShowMilestones] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
 
   // const descriptionRef = useRef(null);
 
@@ -38,6 +39,11 @@ function ProposalPage() {
       document.execCommand('copy');
     }
   };
+  
+  const handleButtonClick = () => {
+    handleCopyToClipboard();
+    setIsClicked(true);
+}
 
   const { input, handleInputChange, handleSubmit, isLoading, messages } =
     useChat({
@@ -164,11 +170,11 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
   return (
     <>
 
-      <div className='mr-[16px] ml-[16px] mt-10'>  
+      <div className='mr-[16px] ml-[16px] mt-6'>  
             <form onSubmit={onSubmit} className='overflow-x-hidden overflow-y-scroll scrollbar-hide ml-[16px] '>
             <div className='w-full flex overflow-y-scroll' > 
             <div className='w-1/2 pr-4 text-white overflow-scroll rounded-lg focus:z-10 focus:ring-4 focus:ring-gray-200 relative' 
-                  style={{ height: '68vh' }} >
+                  style={{ height: '65vh' }} >
                   <div className='flex flex-col '> 
                   <div className='flex '>
                   <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>Abstract </h1>
@@ -510,18 +516,17 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   placeholder={mainPlaceholder}
               /> */}
               {/* //COPY THIS TEXTAREA */}
-              <div className='flex'>
-                
-              </div>
+              <div className="flex flex-col items-start w-1/2">
+              <div className="text-neutral-200 text-base font-medium leading-[100%] uppercase self-stretch mb-4">
+                  Preview
+                </div>
               <textarea 
-                ref={descriptionRef}
-                value={description} 
-                style={{ height: '68vh' , whiteSpace: "pre-wrap"}}
-                onChange={(e) => setDescription(e.target.value)} 
-                className="w-1/2 mb-2 bg-transparent p-2 overflow-scroll text-white rounded-lg border border-custom-gray
-                text-neutral-400 text-xs self-stretch items-start rounded border 
-                border-solid border-zinc-800 mr-[16px] resize-none"
-                placeholder={`*EXAMPLE PROPOSAL* TITLE: Ape Fest 2024 
+                  ref={descriptionRef}
+                  value={description} 
+                  style={{ width: '100%', height: '65vh', whiteSpace: "pre-wrap"}}
+                  onChange={(e) => setDescription(e.target.value)} 
+                  className="bg-transparent p-2 overflow-scroll text-white rounded-lg border border-custom-gray text-neutral-400 text-xs rounded border-solid border-zinc-800 resize-none"
+                   placeholder={`*EXAMPLE PROPOSAL* TITLE: Ape Fest 2024 
 
 PROPOSAL CATEGORY: 
 Ecosystem Fund Allocation 
@@ -549,6 +554,7 @@ Month 10-12: Host Ape Fest, evaluate its success, and gather feedback for future
 COST: 
 The overall cost to implement Ape Fest is estimated at $3,000,000. We are seeking funding support from the Ape Foundation to cover these expenses and ensure the successful execution of the music festival.`}
 />
+</div>
             </div>
               <button
                 type="submit"
@@ -558,10 +564,18 @@ The overall cost to implement Ape Fest is estimated at $3,000,000. We are seekin
             </button>
             {/* NEED TO MOVE */}
             <button
-              onClick={handleCopyToClipboard}
-              className="absolute mt-2 mr-[16px] right-4 mb-52 text-white text-center text-base font-bold leading-[146.667%] self-stretch justify-center items-center border px-5 py-2 rounded-[100px] border-solid border-blue-600"> 
+    onClick={handleButtonClick}
+    className={`absolute mt-2 mr-[16px] right-4 mb-52 text-white text-center text-base font-bold leading-[146.667%] self-stretch justify-center items-center border px-5 py-2 rounded-[100px] border-solid ${isClicked ? 'border-green-600' : 'border-blue-600'}`}> 
+    Copy to clipboard
+</button>
+
+
+            {/* <button
+              onClick={handleClick}
+              className={`absolute mt-2 mr-[16px] right-4 mb-52 text-white text-center text-base font-bold leading-[146.667%] self-stretch justify-center items-center px-5 py-2 rounded-[100px] ${clicked ? 'border-green-600' : 'border-blue-600'}`}>
               Copy to clipboard
-            </button>
+          </button> */}
+
             </form>
           
          
