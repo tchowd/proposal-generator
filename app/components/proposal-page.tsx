@@ -165,10 +165,10 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     <>
 
       <div className='mr-[16px] ml-[16px] mt-10'>  
-            <form onSubmit={onSubmit} className='overflow-x-hidden overflow-y-scroll scrollbar-hide'>
+            <form onSubmit={onSubmit} className='overflow-x-hidden overflow-y-scroll scrollbar-hide ml-[16px] '>
             <div className='w-full flex overflow-y-scroll' > 
             <div className='w-1/2 pr-4 text-white overflow-scroll rounded-lg focus:z-10 focus:ring-4 focus:ring-gray-200 relative' 
-                  style={{ height: '70vh' }} >
+                  style={{ height: '68vh' }} >
                   <div className='flex flex-col '> 
                   <div className='flex '>
                   <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>Abstract </h1>
@@ -197,7 +197,7 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                       rows={1}
                       className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
                       items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
-                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
+                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px resize-none"
                   />
                   <div className="text-neutral-200 text-xs opacity-50 w-full mt-3 max-md:max-w-full">
                     Tip: you can give a short description to get a proposal. But the more details you add, the better the proposal will be.
@@ -216,7 +216,7 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                       rows={1}
                       className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
                       items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
-                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
+                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px resize-none"
                   />
                   </div>
                     <div className='flex flex-col mt-4'> 
@@ -263,7 +263,7 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                       rows={1}
                       className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
                       items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
-                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
+                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px resize-none"
                       />
                   </div>  
                   <div className='flex flex-col mt-4'>  
@@ -289,7 +289,7 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                       rows={1}
                       className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
                       items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
-                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
+                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px resize-none"
                   />
                   </div>
 
@@ -317,7 +317,7 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                       rows={1}
                       className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
                       items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
-                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
+                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px resize-none"
                   />
                   </div>
 
@@ -346,7 +346,7 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                       rows={1}
                       className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
                       items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
-                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
+                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px resize-none"
                   />
                   </div>
 
@@ -374,7 +374,7 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                       rows={1}
                       className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
                       items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
-                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
+                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px resize-none"
                   />
                   </div>
 
@@ -437,7 +437,7 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                                 rows={1}
                                 className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
                                 items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
-                                text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
+                                text-neutral-400 text-xs opacity-50 max-w-full -mt-px resize-none"
                                 value={milestone.description}
                                 onChange={(e) => {
                                     const newValue = e.target.value;
@@ -454,7 +454,7 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                                 rows={1}
                                 className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
                                 items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
-                                text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
+                                text-neutral-400 text-xs opacity-50 max-w-full -mt-px resize-none"
                                 value={milestone.date}
                                 onChange={(e) => {
                                     const newDate = e.target.value;
@@ -470,7 +470,7 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                       ))}
                 
             </div>
-                   <div className='flex flex-col  mt-4'> 
+                   <div className='flex flex-col  mt-4 mb-5'> 
                   <div className='flex '>
                   <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>  Overall Cost </h1> 
 
@@ -495,7 +495,7 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                       rows={1}
                       className="w-full mt-3 bg-transparent p-2 text-white rounded-lg border border-custom-gray
                       items-start rounded border flex w-full grow flex-col mt-2 pl-2.5 pr-5 py-2.5 border-solid border-zinc-800 max-md:max-w-full 
-                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px"
+                      text-neutral-400 text-xs opacity-50 max-w-full -mt-px resize-none"
                   />
                   </div>              
               </div>
@@ -516,11 +516,11 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
               <textarea 
                 ref={descriptionRef}
                 value={description} 
-                style={{ height: '70vh' , whiteSpace: "pre-wrap"}}
+                style={{ height: '68vh' , whiteSpace: "pre-wrap"}}
                 onChange={(e) => setDescription(e.target.value)} 
                 className="w-1/2 mb-2 bg-transparent p-2 overflow-scroll text-white rounded-lg border border-custom-gray
                 text-neutral-400 text-xs self-stretch items-start rounded border 
-                border-solid border-zinc-800 "
+                border-solid border-zinc-800 mr-[16px] resize-none"
                 placeholder={`*EXAMPLE PROPOSAL* TITLE: Ape Fest 2024 
 
 PROPOSAL CATEGORY: 
@@ -552,14 +552,14 @@ The overall cost to implement Ape Fest is estimated at $3,000,000. We are seekin
             </div>
               <button
                 type="submit"
-                className="text-white right-0 text-center text-base font-bold leading-[146.667%] self-stretch justify-center items-center bg-blue-600 px-5 py-2 rounded-[100px]"
+                className="text-white mt-2 left-4 text-center text-base font-bold leading-[146.667%] self-stretch justify-center items-center bg-blue-600 px-5 py-2 rounded-[100px]"
                 >
                 Generate
             </button>
             {/* NEED TO MOVE */}
             <button
               onClick={handleCopyToClipboard}
-              className="absolute  right-0 mr-4 mb-52 text-white text-center text-base font-bold leading-[146.667%] self-stretch justify-center items-center border px-5 py-2 rounded-[100px] border-solid border-blue-600"> 
+              className="absolute mt-2 mr-[16px] right-4 mb-52 text-white text-center text-base font-bold leading-[146.667%] self-stretch justify-center items-center border px-5 py-2 rounded-[100px] border-solid border-blue-600"> 
               Copy to clipboard
             </button>
             </form>
