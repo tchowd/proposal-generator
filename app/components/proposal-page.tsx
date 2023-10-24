@@ -3,6 +3,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useChat } from 'ai/react';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
+import '../globals.css';
 
 function ProposalPage() {
   const [team, setTeam] = useState('');
@@ -39,7 +40,7 @@ function ProposalPage() {
   const { input, handleInputChange, handleSubmit, isLoading, messages } =
     useChat({
       body: {
-        abstract, title, author, team, benefits, rationale, keyTerms, specs, steps, time, cost
+        abstract, title, category, team, benefits, keyTerms, specs, steps, time, cost
       },
     });
 
@@ -157,21 +158,19 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   <div className='flex flex-col '> 
                   <div className='flex '>
                   <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>Abstract </h1>
-                   <div
-                        className="hover:text-blue-700 hover:cursor-pointer relative"
-                        onClick={() => toggleTooltip(0)}
-                    >
-                        <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
-                        {tooltipVisible[0] && (
-                            <div 
-                            style={{ width: '500px' }}
-                            className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip
-                            text-neutral-200 text-xs leading-[183.33%] self-stretc"
-                            >
-                              Provide a brief introduction of yourself and your team if you’re requesting funding. If you’re seeking funding, each team member set to receive funds must separately sign a grant agreement and undergo KYC verification before funds are released.
-                            </div>
-                        )}
-                    </div>
+                  <div
+                      className="hover:text-blue-700 hover:cursor-pointer relative tooltip-wrapper"
+                      onClick={() => toggleTooltip(0)}
+                  >
+                      <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
+                      <div 
+                          style={{ width: '500px' }}
+                          className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip
+                          text-neutral-200 text-xs leading-[183.33%] self-stretch"
+                      >
+                          Provide a brief introduction of yourself and your team if you’re requesting funding. If you’re seeking funding, each team member set to receive funds must separately sign a grant agreement and undergo KYC verification before funds are released.
+                      </div>
+                  </div>
 
 
 
@@ -231,20 +230,17 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   <div className='flex'>
                   <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>Team Description </h1>
                   <div
-                        className="hover:text-blue-700 hover:cursor-pointer relative"
-                        onClick={() => toggleTooltip(1)}
+                    className={`hover:text-blue-700 hover:cursor-pointer relative tooltip-wrapper ${tooltipVisible[1] ? 'active' : ''}`}
+                    onClick={() => toggleTooltip(1)}
+                  >
+                    <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
+                    <div 
+                      style={{ width: '500px' }}
+                      className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip text-neutral-200 text-xs leading-[183.33%] self-stretch"
                     >
-                        <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
-                        {tooltipVisible[1] && (
-                            <div 
-                            style={{ width: '500px' }}
-                            className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip
-                            text-neutral-200 text-xs leading-[183.33%] self-stretc"
-                            >
-                              Provide a brief introduction of yourself and your team if you’re requesting funding. If you’re seeking funding, each team member set to receive funds must separately sign a grant agreement and undergo KYC verification before funds are released.
-                            </div>
-                        )}
+                      Provide a brief introduction of yourself and your team if you’re requesting funding. If you’re seeking funding, each team member set to receive funds must separately sign a grant agreement and undergo KYC verification before funds are released.
                     </div>
+                  </div>
                   </div>
                   <textarea
                       onChange={handleTeamInputChange}
@@ -260,19 +256,17 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   <div className='flex'>
                   <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>BENEFIT TO APECOIN ECOSYSTEM </h1> 
                   <div
-                        className="hover:text-blue-700 hover:cursor-pointer relative"
-                        onClick={() => toggleTooltip(2)}
+                    className={`hover:text-blue-700 hover:cursor-pointer relative tooltip-wrapper ${tooltipVisible[2] ? 'active' : ''}`}
+                    onClick={() => toggleTooltip(2)}
+                  >
+                    <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
+                    <div 
+                      style={{ width: '500px' }}
+                      className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip text-neutral-200 text-xs leading-[183.33%] self-stretch"
                     >
-                        <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
-                        {tooltipVisible[2] && (
-                            <div 
-                            style={{ width: '500px' }}
-                            className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip
-                            text-neutral-200 text-xs leading-[183.33%] self-stretc"
-                            >
-                          Explain how your proposal will benefit the ApeCoin ecosystem, and how it aligns with the APE Community’s core mission and values. This section will be visible to voters on Snapshot.                            </div>
-                        )}
+                      Explain how your proposal will benefit the ApeCoin ecosystem, and how it aligns with the APE Community’s core mission and values. This section will be visible to voters on Snapshot.
                     </div>
+                  </div>
                   </div>
                   <textarea
                       onChange={handleBenefitsInputChange}
@@ -290,19 +284,17 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'> Key Terms (optional)  </h1> 
 
                   <div
-                        className="hover:text-blue-700 hover:cursor-pointer relative"
-                        onClick={() => toggleTooltip(3)}
+                    className={`hover:text-blue-700 hover:cursor-pointer relative tooltip-wrapper ${tooltipVisible[3] ? 'active' : ''}`}
+                    onClick={() => toggleTooltip(3)}
+                  >
+                    <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
+                    <div 
+                      style={{ width: '500px' }}
+                      className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip text-neutral-200 text-xs leading-[183.33%] self-stretch"
                     >
-                        <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
-                        {tooltipVisible[3] && (
-                            <div 
-                            style={{ width: '500px' }}
-                            className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip
-                            text-neutral-200 text-xs leading-[183.33%] self-stretc"
-                            >
-                          Definitions of any terms within the proposal that are unique to the proposal, new to the APE Community, and/or industry-specific (optional).                           </div>
-                        )}
+                      Definitions of any terms within the proposal that are unique to the proposal, new to the APE Community, and/or industry-specific (optional).
                     </div>
+                  </div>
                   </div>
                   <textarea
                       onChange={handleKeyTermsInputChange}
@@ -321,20 +313,17 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'> PLATFORMS & TECHNOLOGIES  </h1> 
 
                   <div
-                        className="hover:text-blue-700 hover:cursor-pointer relative"
-                        onClick={() => toggleTooltip(4)}
+                    className={`hover:text-blue-700 hover:cursor-pointer relative tooltip-wrapper ${tooltipVisible[4] ? 'active' : ''}`}
+                    onClick={() => toggleTooltip(4)}
+                  >
+                    <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
+                    <div 
+                      style={{ width: '500px' }}
+                      className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip text-neutral-200 text-xs leading-[183.33%] self-stretch"
                     >
-                        <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
-                        {tooltipVisible[4] && (
-                            <div 
-                            style={{ width: '500px' }}
-                            className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip
-                            text-neutral-200 text-xs leading-[183.33%] self-stretc"
-                            >
-                            A detailed breakdown of the platforms and technologies that will be used, if any.
-                          </div>
-                        )}
+                      A detailed breakdown of the platforms and technologies that will be used, if any.
                     </div>
+                  </div>
                   </div>
                   <textarea
                       onChange={handleSpecsInputChange}
@@ -352,19 +341,16 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>  STEPS TO IMPLEMENT & TIMELINE  </h1> 
 
                   <div
-                        className="hover:text-blue-700 hover:cursor-pointer relative"
-                        onClick={() => toggleTooltip(5)}
+                    className={`hover:text-blue-700 hover:cursor-pointer relative tooltip-wrapper ${tooltipVisible[4] ? 'active' : ''}`}
+                    onClick={() => toggleTooltip(5)}
+                  >
+                    <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
+                    <div 
+                      style={{ width: '500px' }}
+                      className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip text-neutral-200 text-xs leading-[183.33%] self-stretch"
                     >
-                        <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
-                        {tooltipVisible[5] && (
-                            <div 
-                            style={{ width: '500px' }}
-                            className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip
-                            text-neutral-200 text-xs leading-[183.33%] self-stretc"
-                            >
                             Outline the steps to implement your proposal, including the associated costs, key performance indicators, personnel requirements, any expectations of the Ape Foundation, and other resources needed for each step where applicable. This section also provides relevant timing details, including the project’s start date and key milestones.
                           </div>
-                        )}
                     </div>
                   </div>
                   <textarea
@@ -382,19 +368,17 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
             <div className='flex '>
               <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>  Key Milestones  </h1> 
 
-                    <div
-                        className="hover:text-blue-700 hover:cursor-pointer relative"
-                        onClick={() => toggleTooltip(6)}
+              <div
+                    className={`hover:text-blue-700 hover:cursor-pointer relative tooltip-wrapper ${tooltipVisible[4] ? 'active' : ''}`}
+                    onClick={() => toggleTooltip(6)}
+                  >
+                    <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
+                    <div 
+                      style={{ width: '500px' }}
+                      className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip text-neutral-200 text-xs leading-[183.33%] self-stretch"
                     >
-                        <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
-                        {tooltipVisible[6] && (
-                            <div 
-                            style={{ width: '500px' }}
-                            className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip
-                            text-neutral-200 text-xs leading-[183.33%] self-stretc"
-                            >
                           Outline the steps to implement your proposal, including the associated costs, key performance indicators, personnel requirements, any expectations of the Ape Foundation, and other resources needed for each step where applicable. This section also provides relevant timing details, including the project’s start date and key milestones.                          </div>
-                        )}
+                        
                     </div>
                   </div>
                 {milestones.map((milestone, index) => (
@@ -466,19 +450,17 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>  Overall Cost </h1> 
 
                   <div
-                        className="hover:text-blue-700 hover:cursor-pointer relative"
-                        onClick={() => toggleTooltip(7)}
+                    className={`hover:text-blue-700 hover:cursor-pointer relative tooltip-wrapper ${tooltipVisible[4] ? 'active' : ''}`}
+                    onClick={() => toggleTooltip(7)}
+                  >
+                    <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
+                    <div 
+                      style={{ width: '500px' }}
+                      className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip text-neutral-200 text-xs leading-[183.33%] self-stretch"
                     >
-                        <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
-                        {tooltipVisible[7] && (
-                            <div 
-                            style={{ width: '500px' }}
-                            className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip
-                            text-neutral-200 text-xs leading-[183.33%] self-stretc"
-                            >
                             Summarize the total budget associated with implementing the proposal. This section will be visible to voters on Snapshot.
                           </div>
-                        )}
+                        
                     </div>
                   </div>
                   <textarea

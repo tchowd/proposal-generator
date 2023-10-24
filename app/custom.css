@@ -1,3 +1,11 @@
 .tooltip {
     z-index: 9999 !important;
 }
+
+.tooltip-wrapper .tooltip {
+    display: none;
+  }
+
+  .tooltip-wrapper:hover .tooltip {
+    display: block;
+  }
