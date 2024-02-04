@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useChat } from 'ai/react';
 import { AiOutlineQuestionCircle } from 'react-icons/ai';
 import '../globals.css';
@@ -54,17 +54,22 @@ function ProposalPage() {
     });
 
     
+// const handleInputChange = useCallback((e) => {
+  const handleAbstractInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    handleInputChange(e);
+    setAbstract(e.target.value);
+}, [handleInputChange]);
 
-  const handleAbstractInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      handleInputChange(e);
-      setAbstract(e.target.value);
-  };
+
+  // const handleAbstractInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  //     handleInputChange(e);
+  //     setAbstract(e.target.value);
+  // };
   
-  
-  const handleTitleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleTitleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
       handleInputChange(e);
       setTitle(e.target.value);
-  };
+  }, [handleInputChange]);
 
   const handleTeamInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     handleInputChange(e);
@@ -121,10 +126,13 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 
 
   useEffect(() => {
-    setTitle(formattedBios);
-    setDescription(processedData);
-  }, [formattedBios, processedData]);
-
+    if (title !== formattedBios) {
+      setTitle(formattedBios);
+    }
+    if (description !== processedData) {
+      setDescription(processedData);
+    }
+  }, [formattedBios, processedData, title, description]);
   
   // const [milestones, setMilestones] = useState([]); // Assuming initial state is an empty array
   const [tooltipVisible, setTooltipVisible] = useState<Array<boolean>>([]);
@@ -156,9 +164,6 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     });
 };
 
-// const removeAllMilestones = () => {
-//   setMilestones([]);
-// };
 
   return (
     <>
