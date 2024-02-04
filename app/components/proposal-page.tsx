@@ -122,17 +122,9 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 
   useEffect(() => {
     setTitle(formattedBios);
-  }, [formattedBios]);
+    setDescription(processedData);
+  }, [formattedBios, processedData]);
 
-  useEffect(() => {
-      setDescription(processedData);
-  }, [processedData]);
-
-  // type Milestone = {
-  //   number: number;
-  //   date: string;
-  //   description?: string; // Add this line
-  // };
   
   // const [milestones, setMilestones] = useState([]); // Assuming initial state is an empty array
   const [tooltipVisible, setTooltipVisible] = useState<Array<boolean>>([]);

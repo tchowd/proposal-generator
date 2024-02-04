@@ -12,13 +12,13 @@ export async function POST(req: Request) {
   const { abstract, title, category, team, benefits, keyTerms, specs, steps, time, cost  } = await req.json();
 
   const response = await openai.createChatCompletion({
-    model: 'gpt-3.5-turbo',
+    model: 'gpt-4',
     stream: true,
     messages: [
       {
         role: 'user',
         content: `
-        Generate a complete 250 word proposal. 
+        Generate a complete 45 word proposal. 
 
         ##### Do not provide information that was not provided. 
         ##### The structure should look like this:
