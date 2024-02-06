@@ -1,11 +1,25 @@
 .tooltip {
-    z-index: 9999 !important;
+    z-index: 9999;
 }
 
 .tooltip-wrapper .tooltip {
     display: none;
+    z-index: 9999;
   }
 
   .tooltip-wrapper:hover .tooltip {
     display: block;
+    z-index: 9999;
+  }
+
+  .button-generate {
+    color: white; /* Example of a normal state color */
+    background-color: blue; /* Example of a normal state background */
+    /* Add other styling as needed */
+  }
+  
+  /* Disabled button styles */
+  .button-generate:disabled {
+    color: #999; /* Gray text to indicate it's disabled */
+    background-color: #ccc; /* Lighter gray background */
   }

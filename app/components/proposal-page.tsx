@@ -24,6 +24,7 @@ function ProposalPage() {
   const [category, setCategory] = useState('');
   const [showMilestones, setShowMilestones] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // const descriptionRef = useRef(null);
 
@@ -43,6 +44,7 @@ function ProposalPage() {
   const handleButtonClick = () => {
     handleCopyToClipboard();
     setIsClicked(true);
+    // setIsSubmitted(true);
 }
 
 
@@ -58,7 +60,8 @@ function ProposalPage() {
   const handleAbstractInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     handleInputChange(e);
     setAbstract(e.target.value);
-}, [handleInputChange]);
+    setIsSubmitted(false);
+}, [handleInputChange, setIsSubmitted]);
 
 
   // const handleAbstractInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -121,7 +124,9 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
   
 
   const onSubmit = (e: any) => {
+    e.preventDefault();
     handleSubmit(e);
+    setIsSubmitted(true);
   };
 
 
@@ -171,13 +176,12 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       <div className='mr-[16px] ml-[16px] mt-6'>  
             <form onSubmit={onSubmit} className='overflow-x-hidden overflow-y-scroll scrollbar-hide ml-[16px] '>
             <div className='w-full flex overflow-y-scroll' > 
-            <div className='w-1/2 pr-4 text-white overflow-scroll rounded-lg focus:z-10 focus:ring-4 focus:ring-gray-200 relative' 
-                  style={{ height: '65vh' }} >
+            <div className='w-1/2 pr-4 text-white overflow-scroll rounded-lg z-50 focus:ring-4 focus:ring-gray-200 relative'  style={{ height: '65vh', zIndex: 9999 }} >
                   <div className='flex flex-col '> 
                   <div className='flex '>
                   <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>Abstract </h1>
                   <div
-                      className="hover:text-blue-700 hover:cursor-pointer relative tooltip-wrapper"
+                      className="hover:text-blue-700 hover:cursor-pointer relative tooltip-wrapper tooltip"
                       onClick={() => toggleTooltip(0)}
                   >
                       <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
@@ -274,13 +278,14 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   <div className='flex'>
                   <h1 className='flex text-neutral-200 text-xs leading-[183.33%] uppercase self-stretch'>BENEFIT TO APECOIN ECOSYSTEM </h1> 
                   <div
-                    className={`hover:text-blue-700 hover:cursor-pointer relative tooltip-wrapper ${tooltipVisible[2] ? 'active' : ''}`}
+                    className={`hover:text-blue-700 hover:cursor-pointer relative tooltip-wrapper tooltip  ${tooltipVisible[2] ? 'active' : ''}`}
+                    style={{zIndex: 9999 }}
                     onClick={() => toggleTooltip(2)}
                   >
                     <AiOutlineQuestionCircle style={{ marginTop: '2px', marginLeft: '0.5rem' }} />
                     <div 
-                      style={{ width: '500px' }}
-                      className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip text-neutral-200 text-xs leading-[183.33%] self-stretch"
+                      style={{ width: '500px', zIndex: 9999 }} // Increase the z-index value for the tooltip
+                      className="absolute top-0 left-full m-2 bg-[#0054F9] text-white p-2 rounded shadow-lg tooltip text-neutral-200 text-xs leading-[183.33%] self-stretch z-auto"
                     >
                       Explain how your proposal will benefit the ApeCoin ecosystem, and how it aligns with the APE Community’s core mission and values. This section will be visible to voters on Snapshot.
                     </div>
@@ -502,15 +507,15 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                       text-neutral-400 text-xs opacity-50 max-w-full -mt-px resize-none"
                   />
                   </div>              
-              </div>
-              <div className="flex flex-col items-start w-1/2">
+            </div>
+              <div className="flex flex-col items-start w-1/2 z-0" style={{zIndex: 0}}>
               <div className="text-neutral-200 text-base font-medium leading-[100%] uppercase self-stretch mb-4">
                   Preview
                 </div>
               <textarea 
                   ref={descriptionRef}
                   value={description} 
-                  style={{ width: '100%', height: '65vh', whiteSpace: "pre-wrap"}}
+                  style={{ width: '100%', height: '65vh', whiteSpace: "pre-wrap", zIndex: 0}}
                   onChange={(e) => setDescription(e.target.value)} 
                   className="bg-transparent p-2 text-white rounded-lg border border-custom-gray text-neutral-400 text-xs rounded border-solid border-zinc-800 resize-none overflow-y-auto"
                   placeholder={`*EXAMPLE PROPOSAL* TITLE: Ape Fest 2024 
@@ -541,27 +546,22 @@ Month 10-12: Host Ape Fest, evaluate its success, and gather feedback for future
 COST: 
 The overall cost to implement Ape Fest is estimated at $3,000,000. We are seeking funding support from the Ape Foundation to cover these expenses and ensure the successful execution of the music festival.`}
 />
-</div>
+              </div>
             </div>
+            <div>
               <button
                 type="submit"
-                className="text-white mt-2 left-4 text-center text-base font-bold leading-[146.667%] self-stretch justify-center items-center bg-blue-600 px-5 py-2 rounded-[100px]"
+                disabled={isSubmitted}
+                className="mt-2 left-4 text-center text-base font-bold leading-[146.667%] self-stretch justify-center items-center px-5 py-2 rounded-[100px] text-white bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
                 >
                 Generate
             </button>
-            {/* NEED TO MOVE */}
             <button
-    onClick={handleButtonClick}
-    className={`absolute mt-2 mr-[16px] right-4 mb-52 text-white text-center text-base font-bold leading-[146.667%] self-stretch justify-center items-center border px-5 py-2 rounded-[100px] border-solid ${isClicked ? 'border-green-600' : 'border-blue-600'}`}> 
-    Copy to clipboard
-</button>
-
-
-            {/* <button
-              onClick={handleClick}
-              className={`absolute mt-2 mr-[16px] right-4 mb-52 text-white text-center text-base font-bold leading-[146.667%] self-stretch justify-center items-center px-5 py-2 rounded-[100px] ${clicked ? 'border-green-600' : 'border-blue-600'}`}>
-              Copy to clipboard
-          </button> */}
+                onClick={handleButtonClick}
+                className={`absolute mt-2 mr-[16px] right-4 mb-52 text-white text-center text-base font-bold leading-[146.667%] self-stretch justify-center items-center border px-5 py-2 rounded-[100px] border-solid ${isClicked ? 'border-green-600' : 'border-blue-600'}`}> 
+                Copy to clipboard
+            </button>
+            </div>
 
             </form>
           

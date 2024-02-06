@@ -26,3 +26,7 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.tooltip {
+  z-index: 9999; 
+}

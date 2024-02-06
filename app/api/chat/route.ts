@@ -18,7 +18,7 @@ export async function POST(req: Request) {
       {
         role: 'user',
         content: `
-        Generate a complete 45 word proposal. 
+        Generate a complete 300 word proposal. 
 
         ##### Do not provide information that was not provided. 
         ##### The structure should look like this:
