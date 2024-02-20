@@ -238,8 +238,7 @@ const handleCostInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                             id="category-select" 
                             className="mt-2 w-full bg-transparent text-white rounded-lg"
                             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleCategoryInputChange(e)}
-                            value={category}
-                        >
+                            value={category}>
                             <option value="brand">Brand Decision</option>
                             <option value="fund">Fund Allocation</option>
                             <option value="informational">Informational</option>
